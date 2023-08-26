@@ -1,0 +1,12 @@
+<div id="header">
+    <div id="branding">
+        <!-- Site branding goes here -->
+    </div>
+    <div id="user-tools">
+        <a href="{% url 'admin:index' %}">
+            <span class="icon icon-notification"></span>
+            <span class="count">{{ notification_count }}</span>
+        </a>
+        <!-- User tools go here -->
+    </div>
+</div>

@@ -1,0 +1,33 @@
+{% extends 'vendor/base.html' %}
+{% load static %}
+
+{% block title %}Product{%endblock%}
+{% block body %}
+<body>
+
+ <div class="main-content">
+
+         <div class="container-fluid">
+             <div class="row">
+   <div class="col-lg-12">
+       <div class="container">
+           {% for order in orders %}
+
+<div class="card" style="width: 18rem; margin-left:15%">
+  <img class="card-img-top" src="{{order.product.product_image_model.first.image.url}}" alt="Card image cap">
+  <div class="card-body">
+    <p class="card-text">Order Quantity:{{order.quantity}}</p>
+  </div>
+    <button class="btn btn-primary">Verify Details</button>
+</div>
+
+           {%endfor%}
+    </div>
+
+</div>
+         </div>
+     </div>
+ </div>
+
+</body>
+{% endblock %}

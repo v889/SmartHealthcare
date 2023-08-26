@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filter %}
+
+{% block title %}Store{%endblock%}
+{% block body %}
+
+<body>
+
+
+
+
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="{% url 'index' user.id %}">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Store</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        
+
+        <div class="row mt-3 mb-3">
+            <div class="col-lg-4 mt-1 mb-1">
+                <h4 class="m-0 text-uppercase font-weight-bold">Select Product Category - </h4>
+            </div>
+            <div class="col-lg-2 mt-1">
+                <select id="updateText" onchange="myFunction()"
+                    class="badge btn-secondary text-white d-flex text-primary dropdown-toggle " name="subject">
+                    <option disabled="disabled" selected="selected" hidden><strong>
+                            <h1>Category</h1>
+                        </strong> </option>
+
+                    {%for category in categories %}
+                    <option value="{{category.name}}">{{category.name}}</option>
+                    {%endfor%}
+                    <!-- <option value="Business">Business</option> -->
+                </select>
+                <div class="select-dropdown"></div>
+            </div>
+        </div>
+    
+        <div class="row">
+          {% for p in products.object_list %}
+          <div class="col-sm-6 col-lg-4 text-center item mb-4">
+              {% if p.discount %}
+            <span class="tag">Sale {{p.discount}}%</span>
+              {% endif %}
+            <a href="{% url 'Prouct_details' p.id %}"> <img src="{{p.product_image_model.first.image.url}}" alt="Image"></a>
+            <h3 class="text-dark"><a href="shop-single.html">{{p.name}}</a></h3>
+            {% if p.discount %}
+            <p class="price"><del>{{p.price|currency}}</del> &mdash; ₹{{p|discount_price}}</p>
+            {% else %}
+             <p class="price">{{p.price|currency}}</p>
+            {% endif %}
+          </div>
+           {% endfor%}
+
+
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-12 text-center">
+            <div class="site-block-27">
+              <ul>
+                <li><a href="#">&lt;</a></li>
+
+                   {%if products.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{products.previous_page_number}}"
+                                    aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            <li class="active"><a
+                                    href="#"><span>{{products.number}}</span></a></li>
+
+                            {%if products.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{products.next_page_number}}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                            {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="site-section bg-secondary bg-image" style="background-image: url('images/bg_2.jpg');">
+      <div class="container">
+        <div class="row align-items-stretch">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('images/bg_1.jpg');">
+              <div class="banner-1-inner align-self-center">
+                <h2>Pharma Products</h2>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('images/bg_2.jpg');">
+              <div class="banner-1-inner ml-auto  align-self-center">
+                <h2>Rated by Experts</h2>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+<script>
+ function myFunction() {
+        var x = document.getElementById("updateText").value;
+    console.log(x)
+
+        var url_mask = "{%url 'product_cat' category='qholder' %}".replace('qholder', x);
+        window.location.replace(url_mask);
+
+
+
+
+    }
+</script>
+
+
+
+
+</body>
+{% endblock %}

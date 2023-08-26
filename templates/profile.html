@@ -1,0 +1,358 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filter %}
+{% block title %}Profile{%endblock%}
+
+
+{% block style %}
+
+<style>
+    body{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+}
+.emp-profile{
+    padding: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+.profile-img{
+    text-align: center;
+}
+.profile-img img{
+    width: 70%;
+    height: 100%;
+}
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+}
+.profile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+.profile-head h5{
+    color: #333;
+}
+.profile-head h6{
+    color: #0062cc;
+}
+.profile-edit-btn{
+    border: none;
+    border-radius: 1.5rem;
+    width: 70%;
+    padding: 2%;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+}
+.proile-rating{
+    font-size: 12px;
+    color: #818182;
+    margin-top: 5%;
+}
+.proile-rating span{
+    color: #495057;
+    font-size: 15px;
+    font-weight: 600;
+}
+.profile-head .nav-tabs{
+    margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
+    font-weight:600;
+    border: none;
+}
+.profile-head .nav-tabs .nav-link.active{
+    border: none;
+    border-bottom:2px solid #0062cc;
+}
+.profile-work{
+    padding: 14%;
+    margin-top: -15%;
+}
+.profile-work p{
+    font-size: 12px;
+    color: #818182;
+    font-weight: 600;
+    margin-top: 10%;
+}
+.profile-work a{
+    text-decoration: none;
+    color: #495057;
+    font-weight: 600;
+    font-size: 14px;
+}
+.profile-work ul{
+    list-style: none;
+}
+.profile-tab label{
+    font-weight: 600;
+}
+.profile-tab p{
+    font-weight: 600;
+    color: #0062cc;
+}
+#form1{
+   display:None;
+}
+#FileName{
+    border:1px solid black;
+}
+</style>
+
+
+{% endblock %}
+{% block body %}
+<body>
+<div class="container emp-profile">
+    <div class="form-container" style="margin-top: 50px; border-radius: 17px;">
+        {% if messages %}
+        {% for message in messages %}
+        <div id="message-template" class="alert alert-dismissible alert-success">
+            <button onclick="closeBtn()" type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>{{message}}</strong>
+        </div>
+                    {% endfor %}
+        {% endif %}
+             </div>
+
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                             <form action="{% url 'change' user.id %}" method="POST" enctype="multipart/form-data">
+                          {%csrf_token%}
+                            <img id="output" src="{{user.profile_pic.url}}" alt=""/>
+                            <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" name="images" onchange="loadFile(event)"/>
+                            </div>
+
+
+                        </div>
+                        <button id="change" style="display:None;" type="Sumbit" class="btn btn-lg btn-primary">Change Photo</button>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                       {{user.name}}
+                                    </h5>
+
+
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a onclick="home_function()" class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                    <div class="row">
+
+                    <div class="col-md-10"  style="display:block;">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.name}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.email}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Phone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.phone_number}}</p>
+                                            </div>
+                                        </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a onclick="order_function()" class="nav-link"  data-toggle="tab" href="#order" role="tab" aria-controls="home" aria-selected="true">My Orders</a>
+                                     <div class="col-md-10">
+                        <div id="order-tab" class="tab-content profile-tab" style="display:None;">
+        <hr>
+        <table id="order" class="table">
+            <thead>
+                <tr>
+                    <th>Sno.</th>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Date</th>
+
+                    <th>Total</th>
+
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for order in orders %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><a href="{% url 'Prouct_details' order.items.first.product.id %}"><img style="height: 80px;" class="rounded-circle" src="{{order.items.first.product.product_image_model.first.image.url}}" alt=""></a></td>
+                    <td><a href="{% url 'order_details' order.id %}">{{order.items.first.product.name}}&{{order.items.all|length}} more items</a></td>
+                    <td>{{order.date}}</td>
+                    <td>{{order.total_bill|currency}}</td>
+                    {% if order.status %}
+                    <td><small class="badge bg-success">{{order.status}}</small></td>
+                    {% else %}
+                    <td><small class="badge bg-danger">Pending</small></td>
+                    {% endif %}
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+                        </div>
+   </div>
+                                </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link " onclick="doctor_function()" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">My Doctors</a>
+                                     <div id="doctor-tab" class="tab-content profile-tab" style="display:None;">
+                                     <table  class="table">
+
+        <hr>
+            <thead>
+                <tr>
+                    <th>Sno.</th>
+                    <th>Doctor</th>
+                    <th>Doctor Name</th>
+                    <th>Date</th>
+
+                    <th>Fee</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for order in cosnltancy %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><a href="{%url 'doctor_profile' order.doctor.id %}"><img style="height: 80px;" class="rounded-circle" src="{{order.doctor.profile_pic.url}}" alt=""></a></td>
+                    <td><a href="{%url 'doctor_profile' order.doctor.id %}">{{order.doctor.name}}</a></td>
+                    <td>{{order.date}}</td>
+                    <td>{{order.doctor.fees}}</td>
+
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+                                 </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+
+    <button class="btn btn-primary" type="button" id="formButton">ADD Reports+</button>
+
+<form id="form1"action="{% url 'reportadd' user.id %}" method="POST" enctype="multipart/form-data">
+                          {%csrf_token%}
+  <b>Reports Name:</b> <input id="FileName" type="text" name="Name">
+  <b>Files: </b><input type="file" name="file">
+   <button class="btn btn-primary" type="submit" id="submit">Submit</button>
+</form>
+    {% for p in reports %}
+    <div class="row">
+        <div class="col-10" id="my-div" data-model-id="{{p.id}}">
+          <h4> Report Name</h4>
+          <a href="{{p.file.url}}"><p class="link-success">{{p.name}}</p> </a>
+        </div>
+        <div class="col-2">
+               <!-- Default checked -->
+            <!-- Default checked -->
+<div class="custom-control custom-switch">
+    {% if p.show_doctor %}
+  <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+    {%else %}
+    <input type="checkbox" class="custom-control-input" id="customSwitch1" unchecked>
+    {% endif %}
+  <label class="custom-control-label" for="customSwitch1">Show Doctor</label>
+</div>
+
+        </div>
+    </div>
+    {% endfor %}
+        </div>
+    </body>
+<script>
+    var loadFile=function(event){
+        var image=document.getElementById('output');
+        document.getElementById('change').style.display='block';
+        image.src=URL.createObjectURL(event.target.files[0]);
+    };
+    $("#formButton").click(function(){
+        $("#form1").toggle();
+    });
+    const button = document.getElementById('customSwitch1');
+button.addEventListener('click', () => {
+  const div = document.getElementById('my-div');
+  const id = div.dataset.modelId;
+
+  const newValue = button.checked; // replace with the new value of the attribute
+
+  fetch(`/update-attribute/${id}/${newValue}/`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+
+      } else {
+        // handle error
+      }
+    });
+});
+function order_function(){
+document.getElementById('order-tab').style.display='block';
+document.getElementById('myTabContent').style.display='none';
+document.getElementById('doctor-tab').style.display='none';
+
+
+}
+function home_function(){
+document.getElementById('order-tab').style.display='none';
+document.getElementById('myTabContent').style.display='block';
+document.getElementById('doctor-tab').style.display='none';
+}
+function doctor_function(){
+document.getElementById('order-tab').style.display='none';
+document.getElementById('myTabContent').style.display='none';
+document.getElementById('doctor-tab').style.display='block';
+
+}
+
+</script>
+{% endblock %}

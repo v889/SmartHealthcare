@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load custom_filter %}
+{% block body %}
+<body>
+
+<!-- News With Sidebar Start -->
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-8">
+                <div class="row d-flex  align-items-center">
+                    <div class="col-lg-12">
+
+                        <div class="section-title">
+                            <h4 class="m-0 text-uppercase font-weight-bold">{{person.name}}</h4>
+                            <!-- <a class="text-secondary font-weight-medium text-decoration-none" href="">View All</a> -->
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-sm-12 bg-white">
+                        <div class=" ">
+
+                            <img src="{{person.profile_pic.url}}" class=" mx-auto my-3 d-block border rounded-circle"
+                                width="180" height="180" alt="...">
+
+
+
+
+                        </div>
+                        <div class="container-fluid">
+                         <button class="btn btn-primary">Contact Now</button>
+                            </div>
+
+                    </div>
+
+                    <div class="col-lg-8 col-sm-12">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex flex-wrap justify-content-between">
+                                <span class="text-secondary font-weight-bold ">Name</span>
+                                <span class="text-secondary ">{{person.name}}</span>
+                            </li>
+                            <li class="list-group-item d-flex flex-wrap justify-content-between">
+                                <span class="text-secondary font-weight-bold ">Gender</span>
+                                <span class="text-secondary ">{{person.gender}}</span>
+                            </li>
+                            <li class="list-group-item d-flex flex-wrap justify-content-between">
+                                <span class="text-secondary font-weight-bold ">Age</span>
+                                <span class="text-secondary ">{{person.gender}}</span>
+                            </li>
+                            <li class="list-group-item d-flex flex-wrap justify-content-between">
+                                <span class="text-secondary font-weight-bold ">Specialist</span>
+                                <span class="text-secondary ">{{person.specialist}}</span>
+                            </li>
+                            <li class="list-group-item d-flex flex-wrap justify-content-between">
+                                <span class="text-secondary font-weight-bold ">License Number</span>
+                                <span class="text-secondary ">{{person.license_number}}</span>
+                            </li>
+                            <li class="list-group-item d-flex flex-wrap justify-content-between">
+                                <span class="text-secondary font-weight-bold ">Experience</span>
+                                <span class="text-secondary ">{{person.experience}}</span>
+                            </li>
+                            </li>
+                            <li class="list-group-item d-flex flex-wrap justify-content-between">
+                                <span class="text-secondary font-weight-bold ">Language</span>
+                                <span class="text-secondary ">{{person.newspaper_lang_cat}}</span>
+                            </li>
+                            </li>
+
+                            <li class="list-group-item d-flex flex-wrap justify-content-between">
+                                <span class="text-secondary font-weight-bold ">Email ID</span>
+                                <span class="text-secondary ">{{person.email}}</span>
+                            </li>
+
+
+                        </ul>
+
+                    </div>
+                    <div class="col-lg-12 col-sm-12 my-2">
+
+                        <ul class="my-0 list-group list-group-flush">
+
+                            <li class="list-group-item d-flex flex-column">
+                                <span class="text-secondary font-weight-bold ">City</span>
+                                <span class="text-secondary ">{{person.doctor_address.first.city}}</span>
+                            </li>
+                            <li class="list-group-item d-flex flex-wrap flex-column">
+                                <span class="text-secondary font-weight-bold ">State</span>
+                                <span class="text-secondary ">{{person.doctor_address.first.state}}</span>
+                            </li>
+
+                            <li class="list-group-item d-flex flex-wrap justify-content-between">
+                                <span class="text-secondary font-weight-bold ">Pin Code</span>
+                                <span class="text-secondary ">{{person.doctor_address.first.zip_code}}</span>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Social Follow Start -->
+                <div class="mb-3">
+                    <div class="section-title mb-0">
+                        <h4 class="m-0 text-uppercase font-weight-bold">Follow Us</h4>
+                    </div>
+
+                    <div class="d-flex justify-content-center bg-white border border-top-0 p-3">
+                        <a class="btn btn-lg btn-secondary btn-outline-light btn-lg-square mr-2"
+                            style="background: #52AAF4;" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-lg btn-secondary btn-outline-light btn-lg-square mr-2"
+                            style="background: #39569E;" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-lg btn-secondary btn-outline-light btn-lg-square mr-2"
+                            style="background: #0185AE;" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-lg btn-secondary btn-outline-light btn-lg-square mr-2"
+                            style="background: #C8359D;" href="#"><i class="fab fa-instagram"></i></a>
+                        <a class="btn btn-lg btn-secondary btn-outline-light btn-lg-square "
+                            style="background: #DC472E;" href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+
+                </div>
+
+
+
+
+                <!-- jobs news -->
+                <div class="mb-3">
+                    <div class="section-title mb-0">
+                        <h4 class="m-0 text-uppercase font-weight-bold">Shop</h4>
+                        <a class="text-secondary font-weight-medium text-decoration-none" href="{% url 'shop' %}">View
+                            All</a>
+                    </div>
+                    <div class="bg-white border border-top-0 p-3">
+                        {% for trending in products %}
+                        <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
+                            <img class="img-fluid" style="height: 110px; width: 110px;"
+                                src="{{trending.product_image_model.first.image.url}}" alt="">
+                            <div
+                                class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
+
+                                <div class="mb-2">
+
+                                    <span class="text-body" href=""><small>{{trending.price}}</small></span>
+                                </div>
+                                <a class="h6 m-0 text-secondary text-uppercase font-weight-bold"
+                                    href="{% url 'Prouct_details' trending.id%}">{{trending.name|slice:25}}...</a>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+                </div>
+                <!-- jobs news end -->
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- News With Sidebar End -->
+
+
+<div class="col-lg-12 mb-3">
+    <a href=""><img class="img-fluid w-100" src="{% static 'mediadetails/img/ads-728x90.png' %}" alt=""></a>
+</div>
+
+
+
+
+{% block script %}
+
+
+<script>
+    $(document).ready(function () {
+        $("#associated-nav").addClass('active')
+        $("#mediaperson_asso").addClass('active')
+    });
+</script>
+{%endblock %}
+</body>
+{% endblock %}

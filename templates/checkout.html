@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% load custom_filter %}
+{% block title %}Checkout {% endblock %}
+{% block body %}
+{% block style %}
+
+<style>
+  #addressform{
+   display:None;
+}
+</style>
+
+
+{% endblock %}
+<body>
+
+
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="form-container" style="margin-top: 50px; border-radius: 17px;">
+        {% if messages %}
+        {% for message in messages %}
+        <div id="message-template" class="alert alert-dismissible alert-danger">
+            <button onclick="closeBtn()" type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>{{message}}</strong>
+        </div>
+                    {% endfor %}
+        {% endif %}
+    </div>
+        <div class="row">
+          <div class="col-md-12 mb-0">
+            <a href="index.html">Home</a> <span class="mx-2 mb-0">/</span>
+            <strong class="text-black">Checkout</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+        <div class="row" id="my-div" data-model-id="{{user.id}}">
+          <div class="col-md-6 mb-5 mb-md-0">
+            <h2 class="h3 mb-3 text-black">Address Details</h2>
+            <h2>Choose an address</h2>
+<form id="myForm">
+    {% for address in addresses %}
+      <div>
+        <input required type="radio" id="address{{ address.id }}" name="address" value="{{ address.id }}" required>
+        <label  for="address{{ address.id }}">{{ address.first_name }}, {{ address.city }}, {{ address.city }}, {{ address.state }}, {{ address.zip_code }}</label>
+      </div>
+    {% empty %}
+      <p>You don't have any saved addresses. Please add an address below.</p>
+    {% endfor %}
+</form>
+            <button id="add_address_btn" onclick="address_btn()" class="btn btn-primary">Add Address</button>
+
+
+
+            <form  method="post" action="{% url 'add_address' user.id %}" id="addressform">
+              {% csrf_token %}
+            <div class="p-3 p-lg-5 border">
+
+              <div class="form-group">
+                <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
+                <select id="c_country" name="country" class="form-control">
+                  <option value="1">Select a country</option>
+                  <option value="India">India</option>
+                  <option value="2">bangladesh</option>
+                  <option value="3">Algeria</option>
+                  <option value="4">Afghanistan</option>
+                  <option value="5">Ghana</option>
+                  <option value="6">Albania</option>
+                  <option value="7">Bahrain</option>
+                  <option value="8">Colombia</option>
+                  <option value="9">Dominican Republic</option>
+                </select>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                  <input required type="text" class="form-control" id="c_fname" name="first_name">
+                </div>
+                <div class="col-md-6">
+                  <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                  <input required type="text" class="form-control" id="c_lname" name="last_name">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="c_address" class="text-black">House Number<span class="text-danger">*</span></label>
+                  <input required type="text" class="form-control" id="c_address" name="Building_Number" placeholder="House Number">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="c_address" class="text-black">Village or Colony or Road<span class="text-danger">*</span></label>
+                  <input required type="text" class="form-control" id="c_address" name="village_or_colony" placeholder="">
+                </div>
+              </div>
+                <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="c_address" class="text-black">Village or Colony or Road<span class="text-danger">*</span></label>
+                  <input required type="text" class="form-control" id="c_address" name="city" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="c_address" class="text-black">Landmark<span class="text-danger">*</span></label>
+                  <input required type="text" class="form-control" id="c_address" name="landmark" placeholder="Street address">
+                </div>
+              </div>
+    
+
+                <div class="col-md-6">
+                  <label for="c_state_country" class="text-black">State <span class="text-danger">*</span></label>
+                  <input required type="text" class="form-control" id="c_state_country" name="state">
+                </div>
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_postal_zip" class="text-black">Pincode / Zip <span class="text-danger">*</span></label>
+                  <input required type="text" class="form-control" id="c_postal_zip" name="zip_code">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_phone" name="phone_number" placeholder="Phone Number">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Add Address</button>
+            </div>
+      </form>
+    
+          </div>
+
+
+    
+
+    
+            </div>
+          </div>
+
+    </div>
+            <div class="row">
+                  <div class="col-12">
+                    <button id="customSwitch1" class="btn btn-primary btn-lg btn-block" >Proceed To
+                      Checkout</button>
+                  </div>
+                </div>
+    
+<br>
+
+    <div class="site-section bg-secondary bg-image" style="background-image: url('images/bg_2.jpg');">
+      <div class="container">
+        <div class="row align-items-stretch">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('images/bg_1.jpg');">
+              <div class="banner-1-inner align-self-center">
+                <h2>Pharma Products</h2>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('images/bg_2.jpg');">
+              <div class="banner-1-inner ml-auto  align-self-center">
+                <h2>Rated by Experts</h2>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+       </body>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  function address_btn()
+  {
+       document.getElementById('addressform').style.display='block';
+        document.getElementById('add_address_btn').style.display='none';
+  }
+ const button = document.getElementById('customSwitch1');
+button.addEventListener('click', () => {
+  var form = document.getElementById('myForm');
+  var selectedAddress = null;
+  for (var i = 0; i < form.elements.length; i++) {
+    var element = form.elements[i];
+    if (element.type === 'radio' && element.checked) {
+      selectedAddress = element.value;
+      break;
+    }
+  }
+  const div = document.getElementById('my-div');
+  const id = div.dataset.modelId;
+
+  if (selectedAddress !== null) {
+    console.log('Selected address:', selectedAddress);
+    var url= "/payment/"+id+"/"+selectedAddress
+    window.open(url)
+  }
+  else {
+    alert('Please select an address.');
+  }
+});
+
+
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Feedback{%endblock%}
+{% block body %}
+  <body>
+  <div class="row">
+    <div class="wrapper col-10">
+        <img src="{% static 'images/logo2.png' %}" class="img-thumbnail rounded mx-auto d-block"/>
+      <div class="title">FeedBack Form</div>
+      <div class="form-container" style="margin-top: 50px; border-radius: 17px;">
+        {% if messages %}
+        {% for message in messages %}
+        <div id="message-template" class="alert alert-dismissible alert-success">
+            <button onclick="closeBtn()" type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>{{message}}</strong>
+        </div>
+                    {% endfor %}
+        {% endif %}
+             </div>
+      <form action="{% url 'feedback' user.id %}" method="POST">
+          {%csrf_token%}
+        <div class="field">
+            <input readonly value="{{user.name}}"  name="name"  type="text" required>
+
+          </div>
+        <div class="field">
+          <input readonly name="email"  value="{{user.email}}" type="email" required>
+        </div>
+        <div class="field">
+            <textarea placeholder="Message"    name="Message" class="form-control" type="textarea" required> </textarea>
+
+          </div>
+          <br>
+        <!--<div class="content">-->
+        <button class="btn btn-primary me-2" type="submit">Send message!</button>
+      </form>
+    </div>
+    </div>
+  </body>
+{% endblock %}

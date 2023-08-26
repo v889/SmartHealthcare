@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up!</title>
+    <style>
+     body{
+        background-image: url('{% static 'images/pharmacy.jpg' %}');
+        background-repeat: no-repeat;
+
+     }
+     #Createbtn{
+       margin-left: 25%;
+     }
+    </style>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<style>
+
+</style>
+</head>
+
+<body>
+<section class="text-center text-lg-start">
+  <style>
+    .cascading-right {
+      margin-right: -50px;
+    }
+
+    @media (max-width: 991.98px) {
+      .cascading-right {
+        margin-right: 0;
+      }
+    }
+  </style>
+
+    <div class="container py-4">
+        <div class="form-container" style="margin-top: 50px; border-radius: 17px;">
+        {% if messages %}
+        {% for message in messages %}
+        <div id="message-template" class="alert alert-dismissible alert-danger">
+            <button onclick="closeBtn()" type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>{{message}}<strong>
+        </div>
+                    {% endfor %}
+        {% endif %}
+    </div>
+    <div class="row g-0 align-items-center">
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <div class="card cascading-right" style="
+            background: hsla(0, 0%, 100%, 0.55);
+            backdrop-filter: blur(30px);
+            ">
+          <div class="card-body p-5 shadow-5 text-center">
+            <h2 class="fw-bold mb-5">Sign up now</h2>
+            <form action="{% url 'Patient' %}" method="POST">
+              {%csrf_token%}
+
+              <div class="form-outline mb-4">
+                <input required name="name" type="text" id="form3Example1m" class="form-control form-control-lg" />
+                <label class="form-label" for="form3Example1m">Name</label>
+              </div>
+
+
+
+
+
+          <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+
+            <div class="input-box">
+                <label class="required"for="">Gender: </label>
+          <select required name="gender" id="forOther3">
+              <option value="None" selected disabled hidden>Select</option>
+              <option value="Male" {%if value.newspaper_period_cat == "Daily"%}selected{%endif%}>Male</option>
+              <option value="Female" {%if value.newspaper_period_cat == "Weekly"%}selected{%endif%}>Female</option>
+              <option value="Other" {%if value.newspaper_period_cat == "Other"%}selected{%endif%}>Other</option>
+          </select>
+      </div>
+
+
+          </div>
+            <div class="form-outline mb-4">
+            <input required name="email" type="text" id="form3Example97" class="form-control form-control-lg" />
+            <label class="form-label" for="form3Example97">Email ID</label>
+          </div>
+            <div class="form-outline mb-4">
+            <input required name="phone_number" type="tel" id="form3Example99" class="form-control form-control-lg" />
+            <label class="form-label" for="form3Example9">Phone Number</label>
+          </div>
+
+
+          <div class="form-outline mb-4">
+            <input required name="age" type="number" id="form3Example9" class="form-control form-control-lg" />
+            <label class="form-label" for="form3Example9">AGE</label>
+          </div>
+
+
+
+
+
+
+
+          <div class="d-flex justify-content-end pt-3">
+
+            <button type="Sumbit" class="btn btn-warning btn-lg ms-2">Submit form</button>
+          </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <img src="{% static 'images/logo3.png' %}" class="w-100 rounded-4 shadow-4"
+          alt="" />
+      </div>
+    </div>
+  </div>
+  <!-- Jumbotron -->
+</section>
+
+
+
+
+</body>
+</html>

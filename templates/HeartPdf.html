@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report</title>
+</head>
+<body>
+<h1 style="text-align:Center;">HeartDisease Report:</h1>
+<h2>Name:</h2>
+<p>{{user.name}}</p>
+<h2>Phone Number</h2>
+<p>{{user.phone_number}}</p>
+<h2>Gender</h2>
+{%if Sex %}
+<p>Male</p>
+{% else%}
+<p>FeMale</p>
+{% endif %}
+<h2>Age</h2>
+<p>{{Age}}</p>
+<h2>Chol</h2>
+<p>{{Chol}}</p>
+<h2>Fbs</h2>
+<p>{{Fbs}}</p>
+<h2>Cp</h2>
+<p>{{Cp}}</p>
+<h2>Resting Bp</h2>
+<p>{{Restbp}}</p>
+<h2>Result:</h2>
+<p>{{Result}}</p>
+</body>
+</html>

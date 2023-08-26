@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Diabetes{%endblock%}
+
+{% block body %}
+  <body>
+  <div class="row">
+    <div class="wrapper col-10">
+        <img src="{% static 'images/logo2.png' %}" class="img-thumbnail rounded mx-auto d-block"/>
+      <div class="title">Diabetes Prediction</div>
+      <form action="{% url 'diabetes' user.id %}" method="POST">
+        {%csrf_token%}
+        <div class="field">
+            <input  name="Age" class="form-control" type="number" min="16" max="81" required>
+            <label>Age</label>
+          </div>
+        <div class="field">
+          <input name="Pregnancies" class="form-control" type="number"  min="1" max="15" required>
+          <label>Number of Pregnancies</label>
+        </div>
+        <div class="field">
+            <input name="Insulin" class="form-control" type="number" min="0" max="846" required>
+            <label>Insulin Level</label>
+          </div>
+          <div class="field">
+            <input name="BloodPressure" class="form-control" type="number" min="0" max="122" required>
+            <label>Blood Pressure</label>
+          </div>
+          <div class="field">
+            <input name="SkinThickness" class="form-control" type="number" min="0" max="99" required>
+            <label>Skin Thickness</label>
+          </div>
+          <div class="field">
+            <input name="Glucose" class="form-control" type="number" min="0" max="199" required>
+            <label>Glucose Level</label>
+          </div>
+        <div class="field">
+            <input  name="BMI" class="form-control" type="decimal" min="0.0" max="67.2" required>
+            <label>BMI</label>
+          </div>
+        <div class="field">
+            <input name="DiabetesPedigreeFunction" class="form-control" type="decimal" min="0.08" max="2.42" required>
+            <label>DiabetesPedigreeFunction</label>
+          </div>
+          <br>
+        <!--<div class="content">-->
+        <div class="field">
+           <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Sumbit</button>
+        </div>
+      </form>
+    </div>
+    </div>
+  </body>
+{% endblock %}

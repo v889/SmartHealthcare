@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+
+{% load custom_filter %}
+{% block body %}
+
+<body>
+
+
+
+    <div class="bg-light py-3">
+      <div class="form-container" style="margin-top: 50px; border-radius: 17px;">
+        {% if messages %}
+        {% for message in messages %}
+        <div id="message-template" class="alert alert-dismissible alert-danger">
+            <button onclick="closeBtn()" type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>{{message}}</strong>
+        </div>
+                    {% endfor %}
+        {% endif %}
+    </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0">
+            <a href="index.html">Home</a> <span class="mx-2 mb-0">/</span>
+            <strong class="text-black">Checkout</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="col-md-6">
+
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Coupon Code</h2>
+                <div class="p-3 p-lg-5 border">
+
+                  <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
+                  <div class="input-group w-75">
+                    <input type="text" class="form-control" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code"
+                      aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary btn-sm px-4" type="button" id="button-addon2">Apply</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Your Order</h2>
+                <div class="p-3 p-lg-5 border">
+                  <table class="table site-block-order-table mb-5">
+                    <thead>
+                      <th>Product</th>
+                      <th>Total</th>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                      <tr>
+                        <td>{{product.name}} <strong class="mx-2">x</strong>{{product|cart_quantity:request.session.cart}}</td>
+                        <td>{{product|price_total:request.session.cart|currency}}</td>
+                      </tr>
+                    {% endfor %}
+
+                    </tbody>
+                  </table>
+
+                  <div class="border mb-3" id="my-div" data-model-id="{{user.id}}">
+                    <div class="form-field" id="my-div2" data-model-id="{{address.id}}">
+						<label ><strong>Payment Method:</strong></label>
+                    <select id="payment-type-dropdown" onchange="myinfo()" name="payment_type" >
+                        <option value="None" selected disabled hidden>Select</option>
+                        <option value="COD">COD</option>
+                        <option value="Pay Online">Pay Online</option>
+                         <!--<option value="Online Payment" >Online Payment</option>-->
+                    </select>
+						</div>
+                  </div>
+
+
+
+
+
+                  <div class="form-group">
+                    <button onclick="order_click()" style="display:none;" id="p-id"    class="btn btn-primary btn-lg btn-block" >Place
+                      Order</button>
+                  </div>
+                  <div class="form-group">
+                    <button  id="rzp-button1" style="display:none;" class="btn btn-primary btn-lg btn-block" >Pay Online</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- </form> -->
+      </div>
+
+ <div class="site-section bg-secondary bg-image" style="background-image: url('images/bg_2.jpg');">
+      <div class="container">
+        <div class="row align-items-stretch">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('images/bg_1.jpg');">
+              <div class="banner-1-inner align-self-center">
+                <h2>Pharma Products</h2>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('images/bg_2.jpg');">
+              <div class="banner-1-inner ml-auto  align-self-center">
+                <h2>Rated by Experts</h2>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+       </body>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+	function myinfo(){
+        var x=document.getElementById("payment-type-dropdown").value;
+        if(x==="COD"){
+
+            document.getElementById("rzp-button1").style.display="none";
+            document.getElementById("p-id").style.display="block";
+        }
+
+        else{
+            document.getElementById("rzp-button1").style.display="block";
+            document.getElementById("p-id").style.display="none";
+        }
+    }
+    function order_click()
+    {
+        const div = document.getElementById('my-div');
+        const id = div.dataset.modelId;
+        const div2= document.getElementById('my-div2');
+        const id2 = div2.dataset.modelId;
+        var url= "/order_placed/"+id+"/"+id2
+         window.open(url)
+    }
+
+
+
+
+</script>
+<script>
+    var options = {
+    "key": "rzp_test_hMrfgdaniViVVZ", // Enter the Key ID generated from the Dashboard
+    "amount": "{{payment.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "SmartHealthCare", //your business name
+    "description": "Purchase Transcation",
+    "image": "http://127.0.0.1:8000/static/images/logo2.png",
+    "order_id":"{{payment.id}}",
+    "prefill": {
+        "name": "{{user.name}}", //your customer's name
+        "email": "{{user.email}}",
+        "contact": "{{user.phone_number}}"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "handler": function (response){
+    const div = document.getElementById('my-div');
+        const id = div.dataset.modelId;
+        const div2= document.getElementById('my-div2');
+        const id2 = div.dataset.modelId;
+    window.location.href="http://127.0.0.1:8000/sucess/order_place/${id}/${id2}/${respone.razorpay_order_id}/${response.razorpay_payment_id}/${response.razorpay_signature}"
+    alert(response.razorpay_payment_id);
+    alert(response.razorpay_order_id);
+    alert(response.razorpay_signature)},
+
+    "theme": {
+        "color": "#3399cc"
+    }
+
+};
+
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+
+
+
+</script>
+{% endblock %}

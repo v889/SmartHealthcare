@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Heart Disease{%endblock%}
+
+{% block body %}
+  <body>
+    <div class="row">
+    <div class="wrapper col-10">
+        <img src="{% static 'images/logo2.png' %}" class="img-thumbnail rounded mx-auto d-block" />
+      <div class="title">Heart Disease Prediction</div>
+      <form ction="{% url 'Heart' %}" method="POST">
+        {%csrf_token%}
+        <div class="field">
+            <input name="Age" type="Number" required>
+            <label>Age</label>
+          </div>
+
+        <div class="field">
+          <input name="Sex" type="number" required>
+          <label>SEX</label>
+        </div>
+        <p>1 for male 0 for female</p>
+        <div class="field">
+            <input name="Cp" type="number" required>
+            <label>CP</label>
+          </div>
+          <div class="field">
+            <input name="Rbp" type="number" required>
+            <label>RESTING BP</label>
+          </div>
+          <div class="field">
+            <input name="Chol" type="number" required>
+            <label>CHOL</label>
+          </div>
+          <div class="field">
+            <input name="Fbs"  type="number" required>
+            <label>FBS</label>
+          </div>
+          <div class="field">
+            <input name="Recg" type="number" required>
+            <label>RESTING ECG</label>
+          </div>
+          <div class="field">
+            <input name="Thal" type="number" required>
+            <label>Thal</label>
+          </div>
+          <div class="field">
+            <input name="Exang" type="number" required>
+            <label>EXANG</label>
+          </div>
+          <div class="field">
+            <input name="Opeak" type="number" required>
+            <label>OldPeak</label>
+          </div>
+          <div class="field">
+            <input name="Slope" type="number" required>
+            <label>Slope</label>
+          </div>
+        <div class="field">
+            <input name="Ca" type="number" required>
+            <label>Ca</label>
+          </div>
+        <div class="field">
+            <input name="Tach" type="number" required>
+            <label>Thalach</label>
+          </div>
+          <br>
+        <!--<div class="content">-->
+        <div class="field">
+          <input type="submit" value="Submit">
+        </div>
+      </form>
+    </div>
+    </div>
+  </body>
+{% endblock %}

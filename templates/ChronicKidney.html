@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Chronic Kidney{%endblock%}
+
+{% block body %}
+  <body>
+  <div class="row">
+    <div class="wrapper col-10">
+        <img src="{% static 'images/logo2.png' %}" class="img-thumbnail rounded mx-auto d-block"/>
+      <div class="title">Chronic Kidney Disease Prediction</div>
+      <form  action="{% url 'kidney' user.id %}" method="POST">
+        {%csrf_token%}
+        <div class="field">
+            <input name="SC" type="decimal"  required>
+            <label>SC</label>
+          </div>
+          <div class="field">
+            <input name="SG" type="decimal" min="1" max="1.02" required>
+            <label>SG</label>
+          </div>
+          <div class="field">
+            <input name="AL" type="decimal" min="1" max="5" required>
+            <label>AL</label>
+          </div>
+          <div class="field">
+            <input name="Hemo" type="decimal" required>
+            <label>Hemo</label>
+          </div>
+          <div class="field">
+            <input name="Pcv" type="decimal" required>
+            <label>Pcv</label>
+          </div>
+          <div class="field">
+            <input name="Htn" type="decimal" required>
+            <label>Htn</label>
+          </div>
+
+          <br>
+        <!--<div class="content">-->
+        <div class="field">
+          <input type="submit" value="Submit">
+        </div>
+      </form>
+    </div>
+    </div>
+  </body>
+{% endblock %}
